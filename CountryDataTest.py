@@ -2,10 +2,13 @@ import pickle
 import json
 import sys
 import os
+import time
 from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent="geoapiExercises")
 idx = jdx = 0 
 file_metadata = {}
+
+start = time.time()
 try:
     with open(sys.argv[1]) as file:
         metadata = json.load(file)
@@ -45,7 +48,10 @@ for file in metadata.keys():
         with open(f"country_datatest/country_datatest{jdx}.pickle", 'wb') as handle:
             pickle.dump(file_metadata, handle, protocol=pickle.HIGHEST_PROTOCOL)
         jdx += 1
-    if jdx == 3:
+    if jdx == 10:
         break
 with open("country_datatest/country_datatest_final.pickle", 'wb') as handle:
     pickle.dump(file_metadata, handle, protocol=pickle.HIGHEST_PROTOCOL) 
+    
+end = time.time()
+print("Time taken = ", end-start)
