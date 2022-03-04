@@ -26,7 +26,7 @@ except:
     print("country_dataset directory already exists")
 for file in metadata.keys():
     idx += 1
-    if f"country_data{jdx}.pickle" in os.listdir("country_data"):
+    if f"country_data{jdx}.pickle" in os.listdir("country_datatest"):
         print(f"found country_data{jdx}, so continuing")
         if idx == 10:
             idx = 0
