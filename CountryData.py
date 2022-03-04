@@ -23,7 +23,7 @@ except:
 for file in metadata.keys():
     
     idx += 1
-    if f"country_data{jdx}.pickle" in os.listdir(country_data):
+    if f"country_data{jdx}.pickle" in os.listdir("country_data"):
         if idx == 1000:
             idx = 0
             jdx += 1
