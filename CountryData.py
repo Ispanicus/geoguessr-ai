@@ -31,7 +31,7 @@ for file in metadata.keys():
     try: 
         lat = metadata[file]["lat"]
         long = metadata[file]["lon"]
-        location = geolocator.reverse((lat, long))
+        location = geolocator.reverse((lat, long),language='en')
         address = location.raw['address']
     #     country = address.get('country', '')
         file_metadata[file] = address
