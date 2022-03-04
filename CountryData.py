@@ -1,6 +1,7 @@
 import pickle
 import json
 import sys
+import os
 from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent="geoapiExercises")
 idx = jdx = 0 
@@ -14,7 +15,12 @@ except:
         print(sys.argv[1])
     except:
         print("Failed to get first argument")
-for file in tqdm(metadata.keys()):
+try:
+    print("making directory country_dataset")
+    os.mkdir("country_datatest")
+except:
+    print("country_dataset directory already exists")
+for file in metadata.keys():
     idx += 1
     try: 
         lat = metadata[file]["lat"]
@@ -30,6 +36,6 @@ for file in tqdm(metadata.keys()):
         idx = 0
         jdx += 1
         with open(f"country_data/country_data{jdx}.pickle", 'wb') as handle:
-            pickle.dump(country_guess, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            pickle.dump(file_metadata, handle, protocol=pickle.HIGHEST_PROTOCOL)
 with open("country_data/country_data_final.pickle", 'wb') as handle:
-    pickle.dump(country_guess, handle, protocol=pickle.HIGHEST_PROTOCOL) 
+    pickle.dump(file_metadata, handle, protocol=pickle.HIGHEST_PROTOCOL) 
