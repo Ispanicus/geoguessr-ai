@@ -17,11 +17,17 @@ except:
         print("Failed to get first argument")
 try:
     print("making directory country_dataset")
-    os.mkdir("country_datatest")
+    os.mkdir("country_data")
 except:
     print("country_dataset directory already exists")
 for file in metadata.keys():
+    
     idx += 1
+    if f"country_data{jdx}.pickle" in os.listdir(country_data):
+        if idx == 1000:
+            idx = 0
+            jdx += 1
+        continue
     try: 
         lat = metadata[file]["lat"]
         long = metadata[file]["lon"]
@@ -32,10 +38,10 @@ for file in metadata.keys():
     except:
         file_metadata[file] = "Error"
     
-    if idx == 10000:
+    if idx == 1000:
         idx = 0
-        jdx += 1
         with open(f"country_data/country_data{jdx}.pickle", 'wb') as handle:
             pickle.dump(file_metadata, handle, protocol=pickle.HIGHEST_PROTOCOL)
+        jdx += 1
 with open("country_data/country_data_final.pickle", 'wb') as handle:
     pickle.dump(file_metadata, handle, protocol=pickle.HIGHEST_PROTOCOL) 
