@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#SBATCH --job-name=countrydatatest    # Job name
+#SBATCH --output=R-%x.%j.out      # Name of output file (%j expands to jobId)
+#SBATCH --error=R-%x.%j.err     # Error handling
+#SBATCH --nodes=1                # Total number of nodes requested
+#SBATCH --cpus-per-task=4        # Schedule 4 cores (includes hyperthreading)
+#SBATCH --time=3-00:00:00          # Run time (hh:mm:ss) - run for one hour max
+#SBATCH --partition=brown    # Run on either the red or brown queue
+
+#srun hostname
+
+python3 CountryDataTest.py 'train.json'
