@@ -19,9 +19,9 @@ print("Input resolution:", input_resolution)
 print("Context length:", context_length)
 print("Vocab size:", vocab_size)
 
-image_src = "~/geodata/mapillary1" 
+image_src = "../geodata/mapillary1" 
 batch_size = 1000
-data = pickle.load(open(f"~/geodata/metadata_w_google.pickle","rb"))
+data = pickle.load(open(f"../geodata/metadata_w_google.pickle","rb"))
 file_country = {}
 for key in data.keys():
     for i in range(len(data[key]["results"])):
