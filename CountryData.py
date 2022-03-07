@@ -6,6 +6,7 @@ from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent="geoapiExercises")
 idx = jdx = 0 
 file_metadata = {}
+loaded=False
 try:
     with open(sys.argv[1]) as file:
         metadata = json.load(file)
@@ -28,6 +29,11 @@ for file in metadata.keys():
             idx = 0
             jdx += 1
         continue
+    elif f"country_data{jdx-1}.pickle" in os.listdir("country_data") and not loaded:
+        loaded=True
+        with open(f"country_data/country_data{jdx-1}.pickle", 'rb') as handle:
+            file_metadata=pickle.load(handle)
+        
     try: 
         lat = metadata[file]["lat"]
         long = metadata[file]["lon"]
