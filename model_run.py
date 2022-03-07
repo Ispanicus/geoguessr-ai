@@ -96,6 +96,8 @@ for images, texts, filenames in get_data(batch_size = 1000, image_src = image_sr
 top_label_text = [[convert_from_desc(text_descriptions[labels[x]],start_text,end_text) for x in range(len(labels))] for labels in all_labels]
 
 outdict = dict()
-outdict[all_labels] = all_labels
-outdict[all_texts] = all_texts
-outdict[top_label_text] = top_label_text
+outdict[true_texts] = all_texts
+outdict[predict_texts] = top_label_text
+
+with open("results.pickle", 'wb') as handle:
+    pickle.dump(outdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
