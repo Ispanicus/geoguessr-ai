@@ -4,3 +4,6 @@ train.json
 *.job
 *.out
 *.err
+country_data.pickle
+metadata_w_google.pickle
+results.pickle
