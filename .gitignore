@@ -4,3 +4,6 @@ train.json
 counting.ipynb
 .ipynb_checkpoints/
 __pycache__
+country_data.pickle
+metadata_w_google.pickle
+results.pickle
