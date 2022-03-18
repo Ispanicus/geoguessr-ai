@@ -1,6 +1,4 @@
 pw.pw
 *.pw
 train.json
-*.job
-*.out
-*.err
+counting.ipynb
