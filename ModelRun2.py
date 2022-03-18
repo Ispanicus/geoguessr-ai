@@ -116,7 +116,7 @@ savefilename = f"{os.path.basename(files_src[:-4])}_results.csv"
 with open(savefilename,'w', encoding="utf-8", newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["Gold","Predict"])
-    output = [[x,y] for x,y in zip(all_texts,top_label_text)]
+    output = [[x,y[0]] for x,y in zip(all_texts,top_label_text)]
     for row in output:
         writer.writerow(row)
 
