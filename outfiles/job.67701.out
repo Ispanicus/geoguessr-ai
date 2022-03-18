@@ -1,0 +1,17 @@
+Model name:  ViT-L/14
+Model parameters: 427,616,513
+Input resolution: 224
+Context length: 77
+Vocab size: 49408
+____________________________
+First arg, (image source) =  ./train
+Second arg, (file-label list) =  ./US_states_max100.csv
+Third arg, (label type) =  state
+Traceback (most recent call last):
+  File "ModelRun2.py", line 93, in <module>
+    for images, texts, filenames in get_data(batch_size = 1000, image_src = img_src, text_data = file_label_dict):
+  File "ModelRun2.py", line 77, in get_data
+    image = Image.open(f"{image_src}/{filename}.jpg").convert("RGB")
+  File "/opt/itu/easybuild/software/Anaconda3/2021.05/lib/python3.8/site-packages/PIL/Image.py", line 2912, in open
+    fp = builtins.open(filename, "rb")
+PermissionError: [Errno 13] Permission denied: './train/iavDoeXzcu4S9aeM7C5rsw.jpg'

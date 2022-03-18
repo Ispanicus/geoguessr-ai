@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "ModelRun2.py", line 9, in <module>
+    import skimage
+ModuleNotFoundError: No module named 'skimage'

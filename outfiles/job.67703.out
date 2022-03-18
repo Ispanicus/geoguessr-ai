@@ -1,0 +1,4 @@
+  File "ModelRun2.py", line 26
+    print("Model parameters:", f"{np.sum([int(np.prod(p.shape)) for p in model.parameters()]):,}")
+                                                                                                ^
+SyntaxError: invalid syntax
