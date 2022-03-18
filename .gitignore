@@ -2,3 +2,4 @@ pw.pw
 *.pw
 train.json
 counting.ipynb
+ipynb_checkpoints/
