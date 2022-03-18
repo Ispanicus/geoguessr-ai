@@ -6,7 +6,6 @@ import clip
 import os
 import sys
 import csv
-import skimage
 from PIL import Image
 from collections  import OrderedDict
 # import pickle
@@ -23,7 +22,6 @@ context_length = model.context_length
 vocab_size = model.vocab_size
 
 print("Model name: ",model_name)
-print("Model parameters:", f"{np.sum([int(np.prod(p.shape)) for p in model.parameters()]):,}")
 print("Input resolution:", input_resolution)
 print("Context length:", context_length)
 print("Vocab size:", vocab_size);
@@ -33,8 +31,9 @@ print("First arg, (image source) = ", sys.argv[1])
 print("Second arg, (file-label list) = ", sys.argv[2])
 print("Third arg, (label type) = ", sys.argv[3])
 
+arg3 = sys.argv[3]
 start_text = "This is a photo of "
-end_text = f", a {sys.argv[3]}"
+end_text = f", a {arg3}"
 
 img_src = sys.argv[1]
 files_src = sys.argv[2]
@@ -90,7 +89,7 @@ def convert_from_desc(text,start_text,end_text):
 batch = 0
 all_labels = []
 all_texts = []
-for images, texts, filenames in get_data(batch_size = 1000, image_src = image_src, text_data = file_label_dict):
+for images, texts, filenames in get_data(batch_size = 1000, image_src = img_src, text_data = file_label_dict):
     print("Got batch number: ", batch)
     combined = list(zip(images, texts, filenames))
     random.shuffle(combined)
