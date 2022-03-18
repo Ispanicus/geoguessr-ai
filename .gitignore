@@ -2,4 +2,5 @@ pw.pw
 *.pw
 train.json
 counting.ipynb
-ipynb_checkpoints/
+.ipynb_checkpoints/
+__pycache__
