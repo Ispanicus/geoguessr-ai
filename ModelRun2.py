@@ -112,7 +112,8 @@ for images, texts, filenames in get_data(batch_size = 1000, image_src = img_src,
 
 top_label_text = [[convert_from_desc(text_descriptions[labels[x]],start_text,end_text) for x in range(len(labels))] for labels in all_labels]
 
-savefilename = f"{os.path.basename(files_src[:-4])}_results.csv"
+savefilename = f"../resultcsv/{os.path.basename(files_src[:-4])}_results.csv"
+print("savefilename: ", savefilename)
 with open(savefilename,'w', encoding="utf-8", newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["Gold","Predict"])
