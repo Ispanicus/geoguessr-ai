@@ -90,7 +90,9 @@ batch = 0
 all_labels = []
 all_texts = []
 for images, texts, filenames in get_data(batch_size = 1000, image_src = img_src, text_data = file_label_dict):
-    print("Got batch number: ", batch)
+    with open("progress.out", "w") as progressfile:
+        progressfile.write(f"Progress: {100*batch/batch_size}%}")
+    batch += 1
     combined = list(zip(images, texts, filenames))
     random.shuffle(combined)
     images[:], texts[:], filenames[:] = zip(*combined)
