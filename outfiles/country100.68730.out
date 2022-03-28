@@ -1,0 +1,74 @@
+Model name:  ViT-L/14
+Input resolution: 224
+Context length: 77
+Vocab size: 49408
+____________________________
+First arg, (image source) =  /home/data_shares/mapillary/train
+Second arg, (file-label list) =  ../inputdata/city100.csv
+Third arg, (label type) =  country
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+Got batch number:  0
+savefilename:  ../resultcsv/city100_results.csv
