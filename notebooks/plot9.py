@@ -11,7 +11,7 @@ fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(8, 8))
 image_gen = iter(image_list)
 
 plt.title(img_list[:-7])
-for row in ax:
+for row in axes:
     for col in row:
         filename = next(image_gen)
         image = Image.open(os.path.join(img_src,filename+".jpg")).convert("RGB")
