@@ -1,12 +1,13 @@
 #!/bin/bash
 
 #SBATCH --job-name=USStates        # Job name
-#SBATCH --output=job.%j.out      # Name of output file (%j expands to jobId)
+#SBATCH --output=../outfiles/%x.%j.out      # Name of output file (%j expands to jobId)
+#SBATCH --error=../outfiles/%x.%j.err
 #SBATCH --cpus-per-task=1        # Schedule one core
 #SBATCH --gres=gpu		 # Schedule gpu
 #SBATCH --time=04:00:00          # Run time (hh:mm:ss) - run for one hour max
 #SBATCH --partition=red    # Run on either the Red or Brown queue
 
 # Print out the hostname of the node the job is running on
-python3 ModelRun2.py ./train ./US_states_max100.csv "state" 
+python3 ../ModelRun2.py /home/data_shares/mapillary/train ../inputdata/US_states_max100.csv "state" 
 
