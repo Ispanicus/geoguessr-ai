@@ -16,7 +16,7 @@ for file in list(data.keys()):
 
 CSRF = dict()
 
-for file in tqdm(data.keys()):
+for file in data.keys():
 
     # if file not in all_files:
     #     print(file)
@@ -68,7 +68,7 @@ for country in CSRF.keys():
 accept_list = []
 unaccept_list = []
 
-for group in tqdm(file_groups):
+for group in file_groups:
     accept_one = False
     for file in group:
         if accept_one == False:
