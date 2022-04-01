@@ -3,78 +3,23 @@ import pickle
 import json
 import geopy.distance
 import sys
-
-with open('../../non_repo_data/file_addresses.json') as json_file:
-    data = json.load(json_file)
-with open("../../non_repo_data/train.json") as file:
-    metadata = json.load(file)
-with open('../../non_repo_data/country_to_region.json') as json_file:
-    country_to_region = json.load(json_file)
     
-for file in list(data.keys()):
-    if data[file] == "Error":
-        data.pop(file)
-
-CSRF = dict()
+with open("../file_groups.pickle", 'rb') as handle:
+    file_groups = pickle.load(handle)
+    
 stride = sys.argv[1]
 start = sys.argv[2]
 def splitter(lst,stride,start):
     return lst[start::stride]
 
-for file in data.keys():
-
-    # if file not in all_files:
-    #     print(file)
-    #     print(data[file])
-    #     break
-    country = data[file]["country"]
-    
-    # Use country_to_region dict to check type of region
-    state = country_to_region[country]
-    # Set the actual region/state e.g "state" for U.S turns to Arizona
-    if state in data[file].keys():
-        state = data[file][state]
-    else:
-        state = None
-        
-    # if road exists in file data save to road
-    road = None
-    if "road" in data[file].keys():
-        road = data[file]["road"]
-    
-    if road == None and state == None: # Case1
-        CSRF.setdefault(country,{"no_road_state":[]})
-        CSRF[country]["no_road_state"].append(file)
-        
-    elif road == None: # Case2
-        CSRF.setdefault(country,{"no_road_state":[]})
-        CSRF[country].setdefault(state,{"no_road":[]})
-        CSRF[country][state]["no_road"].append(file)
-        
-    elif state == None: # Case4
-        CSRF.setdefault(country,{"no_road_state":[]})
-        CSRF[country].setdefault(road,{"no_state":[]})
-        CSRF[country][road]["no_state"].append(file)
-        
-    elif state != None and road != None: # Case3
-        CSRF.setdefault(country,{"no_road_state":[]})
-        CSRF[country].setdefault(state,{"no_road":[]})
-        CSRF[country][state].setdefault(road,[])
-        CSRF[country][state][road].append(file)
-        
-
-file_groups = []
-for country in CSRF.keys():
-    file_groups.append(CSRF[country]["no_road_state"])
-    for state_road in CSRF[country].keys():
-        if type(CSRF[country][state_road]) == dict:
-            for finalkey in CSRF[country][state_road].keys():
-                file_groups.append(CSRF[country][state_road][finalkey])              
+#              
 accept_list = []
 unaccept_set = set()
-
+file_groups = splitter(file_groups,stride,start)
 for group in file_groups:
     accept_one = False
+    if group == []:
+        continue
     for file in group:
         if accept_one == False:
                 accept_one = True
@@ -95,5 +40,8 @@ for group in file_groups:
                 if file not in accept_list:
                     accept_list.append(file)
                     
-with open(f"accept_list.pickle", 'wb') as handle:
+with open(f"accept_list{start}.pickle", 'wb') as handle:
     pickle.dump(accept_list, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    
+with open(f"unaccept_set{start}.pickle", 'wb') as handle:
+    pickle.dump(unaccept_set, handle, protocol=pickle.HIGHEST_PROTOCOL)
