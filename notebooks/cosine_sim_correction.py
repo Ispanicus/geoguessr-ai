@@ -6,7 +6,7 @@ from img2vec_pytorch import Img2Vec
 from PIL import Image
 from sklearn.metrics.pairwise import cosine_similarity
     
-with open("../inputdata/file_groups.pickle", 'rb') as handle:
+with open("../pickles/file_groups.pickle", 'rb') as handle:
     file_groups = pickle.load(handle)
 
 stride =int(sys.argv[1])
@@ -23,25 +23,23 @@ for group in file_groups:
     if group == []:
         continue
     for file in group:
+        file_path = file_src + file + ".jpg"
         if accept_one == False:
                 accept_one = True
                 accept_list.append(file)
         for file2 in group:
-            file = file_src + file + ".jpg"
-            file2 = file_src + file2 + ".jpg"
+            
+            file2_path = file_src + file2 + ".jpg"
             if file == file2:
                 continue
             elif file2 in unaccept_set or file in unaccept_set:
                 continue
-            try:
-                img1 = Image.open(file).convert('RGB')
-                img2 = Image.open(file2).convert('RGB')
-                vec1 = img2vec.get_vec(img1, tensor=True).reshape(1, -1)
-                vec2 = img2vec.get_vec(img2, tensor=True).reshape(1, -1)
-                cos_sim = cosine_similarity(vec1, vec2)[0][0]
-            except:
-                print("error with file or file2 image opening")
-                continue
+            img1 = Image.open(file_path).convert('RGB')
+            img2 = Image.open(file2_path).convert('RGB')
+            vec1 = img2vec.get_vec(img1, tensor=True).reshape(1, -1)
+            vec2 = img2vec.get_vec(img2, tensor=True).reshape(1, -1)
+            cos_sim = cosine_similarity(vec1, vec2)[0][0]
+    
             
             if cos_sim > 0.9:
                 unaccept_set.add(file2)
