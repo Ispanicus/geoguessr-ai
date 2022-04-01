@@ -1,0 +1,11 @@
+#!/bin/bash
+sbatch coscor1.job
+sbatch coscor2.job
+sbatch coscor3.job
+sbatch coscor4.job
+sbatch coscor5.job
+sbatch coscor6.job
+sbatch coscor7.job
+sbatch coscor8.job
+sbatch coscor9.job
+sbatch coscor10.job
