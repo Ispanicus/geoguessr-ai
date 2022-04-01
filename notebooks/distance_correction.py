@@ -6,7 +6,7 @@ import sys
     
 with open("../inputdata/file_groups.pickle", 'rb') as handle:
     file_groups = pickle.load(handle)
-with open("../../mapillary/train.json") as file:
+with open("../../non_repo_data/train.json") as file:
     metadata = json.load(file)   
 stride =int(sys.argv[1])
 start = int(sys.argv[2])
