@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH --job-name=dist1        # Job name
+#SBATCH --job-name=dist17        # Job name
 #SBATCH --output=../outfiles/%x.%j.out      # Name of output file (%j expands to jobId)
 #SBATCH --error=../outfiles/%x.%j.err     # Error handling
 #SBATCH --cpus-per-task=1        # Schedule one core
 #SBATCH --time=24:00:00          # Run time (hh:mm:ss) - run for one hour max
 #SBATCH --partition=brown,red   # Run on either the Red or Brown queue
 
-python3 ../notebooks/distance_correction.py 20 0 
+python3 ../notebooks/distance_correction.py 20 16 
 
