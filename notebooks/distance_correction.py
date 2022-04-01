@@ -6,7 +6,8 @@ import sys
     
 with open("../inputdata/file_groups.pickle", 'rb') as handle:
     file_groups = pickle.load(handle)
-    
+with open("../../mapillary/train.json") as file:
+    metadata = json.load(file)   
 stride =int(sys.argv[1])
 start = int(sys.argv[2])
 def splitter(lst,stride,start):
@@ -30,6 +31,7 @@ for group in file_groups:
                 coord2 = (metadata[file2]['lat'],metadata[file2]['lon'])
             except:
                 print("error with file or file2 metadata")
+                continue
             if file == file2:
                 pass
             elif file2 in unaccept_set or file in unaccept_set:
