@@ -9,3 +9,5 @@ country_data.pickle
 metadata_w_google.pickle
 results.pickle
 climates1.csv
+*.err
+*.out
