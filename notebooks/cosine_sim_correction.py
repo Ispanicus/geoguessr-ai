@@ -47,8 +47,8 @@ for group in file_groups:
                 if file not in accept_list:
                     accept_list.append(file)
                     
-with open(f"accept_list{start}.pickle", 'wb') as handle:
+with open(f"cossim_accept_list{start}.pickle", 'wb') as handle:
     pickle.dump(accept_list, handle, protocol=pickle.HIGHEST_PROTOCOL)
     
-with open(f"unaccept_set{start}.pickle", 'wb') as handle:
+with open(f"cossim_unaccept_set{start}.pickle", 'wb') as handle:
     pickle.dump(unaccept_set, handle, protocol=pickle.HIGHEST_PROTOCOL)
