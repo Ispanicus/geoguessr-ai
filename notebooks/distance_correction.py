@@ -21,7 +21,7 @@ start = sys.argv[2]
 def splitter(lst,stride,start):
     return lst[start::stride]
 
-for file in tqdm(data.keys()):
+for file in data.keys():
 
     # if file not in all_files:
     #     print(file)
@@ -73,7 +73,7 @@ for country in CSRF.keys():
 accept_list = []
 unaccept_set = set()
 
-for group in tqdm(file_groups):
+for group in file_groups:
     accept_one = False
     for file in group:
         if accept_one == False:
