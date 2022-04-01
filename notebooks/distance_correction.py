@@ -4,11 +4,11 @@ import json
 import geopy.distance
 import sys
     
-with open("../file_groups.pickle", 'rb') as handle:
+with open("../inputdata/file_groups.pickle", 'rb') as handle:
     file_groups = pickle.load(handle)
     
-stride = sys.argv[1]
-start = sys.argv[2]
+stride =int(sys.argv[1])
+start = int(sys.argv[2])
 def splitter(lst,stride,start):
     return lst[start::stride]
 
