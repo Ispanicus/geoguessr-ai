@@ -2,6 +2,7 @@ import csv
 import pickle
 import json
 import geopy.distance
+import sys
 
 with open('../../non_repo_data/file_addresses.json') as json_file:
     data = json.load(json_file)
@@ -15,6 +16,10 @@ for file in list(data.keys()):
         data.pop(file)
 
 CSRF = dict()
+stride = sys.argv[1]
+start = sys.argv[2]
+def splitter(lst,stride,start):
+    return lst[start::stride]
 
 for file in tqdm(data.keys()):
 
@@ -66,7 +71,7 @@ for country in CSRF.keys():
             for finalkey in CSRF[country][state_road].keys():
                 file_groups.append(CSRF[country][state_road][finalkey])              
 accept_list = []
-unaccept_list = []
+unaccept_set = set()
 
 for group in tqdm(file_groups):
     accept_one = False
@@ -82,10 +87,10 @@ for group in tqdm(file_groups):
                 print("error with file or file2 metadata")
             if file == file2:
                 pass
-            elif file2 in unaccept_list or file in unaccept_list:
+            elif file2 in unaccept_set or file in unaccept_set:
                 pass
-            elif geopy.distance.geodesic(coord1,coord2).km < 1:
-                unaccept_list.append(file2)
+            elif geopy.distance.great_circle(coord1,coord2).km < 1:
+                unaccept_set.add(file2)
             else:
                 if file not in accept_list:
                     accept_list.append(file)
