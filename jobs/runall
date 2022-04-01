@@ -3,3 +3,5 @@ sbatch city100.job
 sbatch city300.job
 sbatch country100.job
 sbatch US_states_max100.job
+sbatch UScity100.job
+sbatch France_states_max100.job

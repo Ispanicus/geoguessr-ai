@@ -87,14 +87,18 @@ def convert_from_desc(text,start_text,end_text):
 
 
 batch = 0
+batch_size = 1000
 all_labels = []
 all_texts = []
-for images, texts, filenames in get_data(batch_size = 1000, image_src = img_src, text_data = file_label_dict):
-    with open("progress.out", "w") as progressfile:
-        progressfile.write(f"Progress: {100*batch/batch_size}%}")
+all_probs = []
+all_filenames = []
+for images, texts, filenames in get_data(batch_size = batch_size, image_src = img_src, text_data = file_label_dict):
+    savefilename = f"../progress/{os.path.basename(files_src[:-4])}_progress.out"
+    with open(savefilename, "w") as progressfile:
+        progressfile.write(f"Progress: {100*batch/batch_size}%")
     batch += 1
     combined = list(zip(images, texts, filenames))
-    random.shuffle(combined)
+    #random.shuffle(combined)
     images[:], texts[:], filenames[:] = zip(*combined)
     image_input = torch.tensor(np.stack(images)).cuda()
 
@@ -107,9 +111,12 @@ for images, texts, filenames in get_data(batch_size = 1000, image_src = img_src,
         text_features /= text_features.norm(dim=-1, keepdim=True)
         
     text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-    top_probs, top_labels = text_probs.cpu().topk(1, dim=-1)
+    topk = 5
+    top_probs, top_labels = text_probs.cpu().topk(topk, dim=-1)
     all_labels.extend([[label.item() for label in image] for image in top_labels])
+    all_probs.extend([[prob.item() for prob in image] for image in top_probs])
     all_texts.extend(texts)
+    all_filenames.extend(filenames)
     
 
 top_label_text = [[convert_from_desc(text_descriptions[labels[x]],start_text,end_text) for x in range(len(labels))] for labels in all_labels]
@@ -117,9 +124,9 @@ top_label_text = [[convert_from_desc(text_descriptions[labels[x]],start_text,end
 savefilename = f"../resultcsv/{os.path.basename(files_src[:-4])}_results.csv"
 print("savefilename: ", savefilename)
 with open(savefilename,'w', encoding="utf-8", newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(["Gold","Predict"])
-    output = [[x,y[0]] for x,y in zip(all_texts,top_label_text)]
+    writer = csv.writer(csvfile, delimiter='\t')
+    writer.writerow(["Gold","Predictions", "Probabilities"])
+    output = [[x,y,z,z2] for x,y,z,z2 in zip(all_texts,top_label_text,all_probs,all_filenames)]
     for row in output:
         writer.writerow(row)
 
