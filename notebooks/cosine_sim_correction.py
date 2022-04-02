@@ -22,22 +22,31 @@ for group in file_groups:
     accept_one = False
     if group == []:
         continue
+        
+    image_dic = {}
+    vec_dic = {}
     for file in group:
         file_path = file_src + file + ".jpg"
+
+        img1 = Image.open(file_path).convert('RGB')
+        vec1 = img2vec.get_vec(img1, tensor=True).reshape(1, -1)
+        image_dic[file] = img1
+        vec_dic[file] = vec1
+    for file in group:
         if accept_one == False:
                 accept_one = True
                 accept_list.append(file)
+        img1 = image_dic[file]
+        vec1 = vec_dic[file]
         for file2 in group:
             
-            file2_path = file_src + file2 + ".jpg"
             if file == file2:
                 continue
             elif file2 in unaccept_set or file in unaccept_set:
                 continue
-            img1 = Image.open(file_path).convert('RGB')
-            img2 = Image.open(file2_path).convert('RGB')
-            vec1 = img2vec.get_vec(img1, tensor=True).reshape(1, -1)
-            vec2 = img2vec.get_vec(img2, tensor=True).reshape(1, -1)
+            
+            img2 = image_dic[file2]
+            vec2 = vec_dic[file2]
             cos_sim = cosine_similarity(vec1, vec2)[0][0]
     
             
