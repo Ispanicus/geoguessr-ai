@@ -12,3 +12,4 @@ results.pickle
 climates1.csv
 *.err
 *.out
+fullclimate.csv
