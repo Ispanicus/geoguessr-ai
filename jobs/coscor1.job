@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=1        # Schedule one core
 #SBATCH --time=24:00:00          # Run time (hh:mm:ss) - run for one hour max
 #SBATCH --gres=gpu
-#SBATCH --partition=brown,red   # Run on either the Red or Brown queue
+#SBATCH --partition=red   # Run on either the Red or Brown queue
 
 python3 ../notebooks/cosine_sim_correction.py 10 0 
 
