@@ -13,3 +13,4 @@ climates1.csv
 *.err
 *.out
 fullclimate.csv
+pickles/country_data_final.pickle
