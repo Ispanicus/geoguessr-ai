@@ -14,3 +14,4 @@ climates1.csv
 *.out
 fullclimate.csv
 pickles/country_data_final.pickle
+resultcsv/climates20_results.csv

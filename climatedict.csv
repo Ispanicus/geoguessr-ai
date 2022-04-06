@@ -11,6 +11,10 @@ Cfb Temperate-Withouth_dry_season-Warm_Summer,temperate
 Cfc Temperate-Withouth_dry_season-Cold_Summer,temperate
 Csa Temperate-Dry_Summer-Hot_Summer,temperate
 Csb Temperate-Dry_Summer-Warm_Summer,temperate
+Cwa Temperate-Dry_Winter-Hot_Summer,temperate
+Cwb Temperate-Dry_Winter-Warm_Summer,temperate
+Cwc Temperate-Dry_Winter-Cold_Summer,temperate
+Dfa Cold-Withouth_dry_season-Very_Cold_Winter,cold
 Dfa Cold-Withouth_dry_season-Hot_Summer,cold
 Dfb Cold-Withouth_dry_season-Warm_Summer,cold
 Dfc Cold-Withouth_dry_season-Cold_Summer,cold
@@ -20,4 +24,6 @@ Dsc Cold-Dry_Summer-Cold_Summer,cold
 Dwa Cold-Dry_Winter-Hot_Summer,cold
 Dwb Cold-Dry_Winter-Warm_Summer,cold
 Dwc Cold-Dry_Winter-Cold_Summer,cold
+Dwd Cold-Dry_Winter-Very_Cold_Winter,cold
+EF Polar-Frost,polar
 ET Polar-Tundra,tundra

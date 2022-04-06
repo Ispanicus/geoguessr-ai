@@ -1,0 +1,28 @@
+﻿Code,Translation
+Af Tropical-Rainforest,tropical rainforest
+Am Tropical-Monsoon,tropical monsoon
+Aw Tropical-Savanna,tropical savanna
+BSh Arid-Steppe-Hot,hot steppe
+BSk Arid-Steppe-Cold,cold steppe
+BWh Arid-Desert-Hot,hot arid desert
+BWk Arid-Desert-Cold,cold arid desert
+Cfa Temperate-Withouth_dry_season-Hot_Summer,humid subtropical
+Cfb Temperate-Withouth_dry_season-Warm_Summer,oceanic
+Cfc Temperate-Withouth_dry_season-Cold_Summer,subpolar oceanic
+Csa Temperate-Dry_Summer-Hot_Summer,temperate with hot and dry summer
+Csb Temperate-Dry_Summer-Warm_Summer,temperate with warm and dry summer
+Cwa Temperate-Dry_Winter-Hot_Summer,dry winter humid sub tropical
+Cwb Temperate-Dry_Winter-Warm_Summer,dry winter subtropical highland
+Cwc Temperate-Dry_Winter-Cold_Summer,dry winter cold subtropical highland
+Dfa Cold-Withouth_dry_season-Hot_Summer,cold with hot summer without dry season
+Dfb Cold-Withouth_dry_season-Warm_Summer,cold with warm summer without dry season
+Dfc Cold-Withouth_dry_season-Cold_Summer,cold with cold summer without dry season
+Dsa Cold-Dry_Summer-Hot_Summer,cold with hot and dry summer
+Dsb Cold-Dry_Summer-Warm_Summer,cold with warm and dry summer
+Dsc Cold-Dry_Summer-Cold_Summer,cold with cold and dry summer
+Dwa Cold-Dry_Winter-Hot_Summer,cold with dry winter and hot summer
+Dwb Cold-Dry_Winter-Warm_Summer,cold with dry winter and warm summer
+Dwc Cold-Dry_Winter-Cold_Summer,cold with dry winter and cold summer
+Dwd Cold-Dry_Winter-Very_Cold_Winter,boreal with severe winter
+EF Polar-Frost,polar
+ET Polar-Tundra,ice cap
