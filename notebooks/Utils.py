@@ -1,14 +1,16 @@
 import csv
-from sklearn.metrics import classification_report,confusion_matrix
-from sklearn.metrics import matthews_corrcoef as MC
-from sklearn.metrics import ConfusionMatrixDisplay as CMD
-import matplotlib.pyplot as plt
-from collections import Counter as Cnt
-import geopandas as gpd
-import pickle
-import pandas as pd
-import json
-import random
+# from sklearn.metrics import classification_report,confusion_matrix
+# from sklearn.metrics import matthews_corrcoef as MC
+# from sklearn.metrics import ConfusionMatrixDisplay as CMD
+# import matplotlib.pyplot as plt
+# from collections import Counter as Cnt
+# import geopandas as gpd
+# import pickle
+# import pandas as pd
+# import json
+# import random
+from PIL import Image
+
 
 
 
@@ -103,4 +105,51 @@ def filter_classes_one(gold,predict,selection):
                 continue
                 
     return goldsel, predsel, indices
+
+def get_data(batch_size = 1000, image_src = None , inputcsv_src  = None , verbose=False , final_batch=True):
+    """Requires:
+    image_src: path to directory with all images e.g /home/data_shares/mapillary/train for HPC
+    inputcsv_src: path to input csv file e.g ../inputdata/France_states_max100.csv
+
+    yields:
+    list of images that have been opened and converted to RGB
+    list of texts which are labels for each image
+    list of filenames without .jpg extension"""
     
+    files = []
+    file_label_dict = {}
+    with open(inputcsv_src, encoding="utf-8",newline="") as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            files.append(row[0])
+            file_label_dict[row[0]] = row[1]
+    
+    
+    max_batch_num = len(files)//batch_size
+    remainder = len(files)%batch_size
+    for batch_num in range(max_batch_num+1):
+        
+        images = []
+        texts = []
+        
+        if batch_num == max_batch_num and remainder == 0:
+            continue
+        elif batch_num == max_batch_num and final_batch == True:
+            filenames = [filename for filename in files[max_batch_num*batch_size::]]
+        elif batch_num == max_batch_num and final_batch != True:
+            continue
+        else:
+            filenames = [filename for filename in files[batch_num*batch_size:(batch_num+1)*batch_size] ]
+        
+        for filename in filenames:            
+            image = Image.open(f"{image_src}/{filename}.jpg").convert("RGB")
+            images.append(preprocess(image))
+            texts.append(file_label_dict[filename])
+                
+        yield images, texts, filenames
+        
+def convert_from_desc(text,start_text,end_text):
+    """Returns text with start_text removed from start and end_text removed from end of text string"""
+    text = text.replace(start_text, "")
+    text = text.replace(end_text, "")
+    return text
