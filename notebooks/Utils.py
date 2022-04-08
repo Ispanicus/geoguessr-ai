@@ -42,3 +42,65 @@ def read_resultcsv(result_file):
 
             
     return gold, predicts, probs, filenames
+
+def filter_classes(gold,predict,selection):
+    """ Given selection of classes filter all other classes to "other" to allow easier display for confusion matrix
+        Input:
+            gold: list of true labels
+            predict: list of predictions (i.e top1 prediction from predicts)
+            selection: list of classes to include
+        Output:
+            goldsel: list of true labels with filtered classes changed to "other" 
+            predsel: list of predictions with filtered classes changed to "other" """
+    goldsel = []
+    predsel = []
+    for g, p in zip(gold,predict):
+
+        if g in selection:
+            if p in selection:
+                goldsel.append(g)
+                predsel.append(p)
+            else:
+                p = "other"
+                goldsel.append(g)
+                predsel.append(p)
+        else:
+            g = "other"
+            if p in selection:
+                goldsel.append(g)
+                predsel.append(p)
+            else:
+                continue
+    return goldsel, predsel
+
+def filter_classes_one(gold,predict,selection):
+     """ Given single class "selection" filter all other classes to "other" if there are no false positive or false negatives involving those classes and the selection. This allows qualitative analysis of single class
+        Input:
+            gold: list of true labels
+            predict: list of predictions (i.e top1 prediction from predicts)
+            selection: string of selected class
+        Output:
+            goldsel: list of true labels with filtered classes changed to "other" 
+            predsel: list of predictions with filtered classes changed to "other"
+            indices: list of indices which helps find relevant image files"""
+        
+    goldsel = []
+    predsel = []
+    indices = []
+    for i, (g, p) in enumerate(zip(gold,predict)):
+
+        if g == selection:
+            indices.append(i)
+            goldsel.append(g)
+            predsel.append(p)
+        else:
+            g = "other"
+            if p == selection:
+                indices.append(i)
+                goldsel.append(g)
+                predsel.append(p)
+            else:
+                continue
+                
+    return goldsel, predsel, indices
+    
