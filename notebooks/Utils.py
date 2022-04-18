@@ -42,6 +42,37 @@ def read_resultcsv(result_file):
                         
     return gold, predicts, probs, filenames
 
+def read_georesultcsv(result_file):
+    """Input: result_file name of geoestimation csv file
+    Returns: 
+        grade_img_pred dictionary
+        first key is "grade" of prediction i.e coarse, middle etc
+        second key is img_id (without .jpg extension)
+        result is dictionary with pred_lat, pred_lon, pred_class keys
+        """
+    grade_img_pred = {}
+
+    with open(f'../georesultcsv/{result_file}', encoding="utf-8",newline="") as csvfile:
+        reader = csv.reader(csvfile, delimiter='\t')
+        
+        for row in reader:
+            row = row[0].split(",")
+            if row[0]=="img_id":
+                continue
+            img_id = row[0]
+            p_key = row[1]
+            pred_class = row[2]
+            pred_lat = row[3]
+            pred_lng = row[4]
+            grade_img_pred.setdefault(p_key,{})
+            grade_img_pred[p_key][img_id] = {"pred_lat":pred_lat,
+                                             "pred_lon":pred_lng,
+                                             "pred_class":pred_class
+                                            }
+                    
+                        
+    return grade_img_pred
+
 def filter_classes(gold,predict,selection):
     """ Given selection of classes filter all other classes to "other" to allow easier display for confusion matrix
             Input:
@@ -152,7 +183,8 @@ def convert_from_desc(text,start_text,end_text):
     return text
     
 def country_from_coords(filenamelist, latlist, lonlist):
-    """Takes in 3 lists, returns a dictionary with filename:country"""
+    """Takes in 3 lists: filenamelist, latlist, longlist 
+    returns a dictionary with filename:country"""
     countrydf = gpd.read_file("../SHP/Countries/world-administrative-boundaries.shp", encoding="utf-8")
     coords = pd.DataFrame({'Filename':filenamelist, 'Latitude': latlist, 'Longitude': lonlist})
     coordsdf = gpd.GeoDataFrame(coords, crs=4326, geometry=gpd.points_from_xy(coords.Longitude, coords.Latitude))
