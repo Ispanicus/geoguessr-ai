@@ -191,5 +191,5 @@ def country_from_coords(filenamelist, latlist, lonlist):
     countrycoorddf = gpd.sjoin(coordsdf, countrydf)
     countrydict = dict()
     for row in countrycoorddf.iterrows():
-    countrydict[row[1][0]] = row[1][10]
+        countrydict[row[1][0]] = row[1][10]
     return countrydict
