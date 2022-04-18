@@ -11,6 +11,25 @@ import pandas as pd
 # import random
 from PIL import Image
 
+def convert_inputcsv(inputcsv_file):
+    """converts inputcsv to geoestimation.csv format
+    input is filename of inputcsv i.e country100.csv
+    creates new file in geoinputdata folder""""
+    with open("../../mapillary/train.json") as file:
+        metadata = json.load(file)
+    inputcsv_name = inputcsv_file[:-4]
+    inputcsv_src = f"../inputdata/{inputcsv_name}.csv"
+    files = []
+    file_label_dict = {}
+    with open(inputcsv_src, encoding="utf-8",newline="") as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        with open(f'../geoinputdata/{inputcsv_name}_geoestimation.csv', 'w', encoding='UTF8',newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(["IMG_ID","LAT","LON"])
+
+            for row in reader:
+                file = row[0]
+                writer.writerow([f"{file}.jpg",metadata[file]["lat"],metadata[file]["lon"]])
 
 def read_resultcsv(result_file):
     """Input: result_file name of csv file
