@@ -152,3 +152,14 @@ def convert_from_desc(text,start_text,end_text):
     text = text.replace(start_text, "")
     text = text.replace(end_text, "")
     return text
+    
+def country_from_coords(filenamelist, latlist, lonlist):
+    """Takes in 3 lists, returns a dictionary with filename:country"""
+    countrydf = gpd.read_file("../SHP/Countries/world-administrative-boundaries.shp", encoding="utf-8")
+    coords = pd.DataFrame({'Filename':filenamelist, 'Latitude': latlist, 'Longitude': lonlist})
+    coordsdf = gpd.GeoDataFrame(coords, crs=4326, geometry=gpd.points_from_xy(coords.Longitude, coords.Latitude))
+    countrycoorddf = gpd.sjoin(coordsdf, countrydf)
+    countrydict = dict()
+    for row in countrycoorddf.iterrows():
+    countrydict[row[1][0]] = row[1][10]
+    return countrydict
