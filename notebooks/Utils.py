@@ -12,8 +12,6 @@ import csv
 from PIL import Image
 
 
-
-
 def read_resultcsv(result_file):
     """Input: result_file name of csv file
     Returns: 
