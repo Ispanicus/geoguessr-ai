@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#SBATCH --job-name=runallinputs        # Job name
+#SBATCH --array=1-6            # Change to number of files in inputdata folder
+#SBATCH --output=../outfiles/%x.%j.out      # Name of output file (%j expands to jobId)
+#SBATCH --error=../outfiles/%x.%j.err     # Error handling
+#SBATCH --exclusive
+#BATCH --gres=gpu		 # Schedule gpu
+#SBATCH --time=24:00:00          # Run time (hh:mm:ss) - run for one hour max
+#SBATCH --partition=red   # Run on either the Red or Brown queue
+
+source /home/jocl/.bashrc
+conda activate base
+echo "Running $(hostname) - run $SLURM_ARRAY_TASK_ID / $SLURM_ARRAY_TASK_COUNT"
+file=$(ls ../inputdata/*.csv | sed -n ${SLURM_ARRAY_TASK_ID}p)
+python3 ../ModelRun3all.py /home/data_shares/mapillary/train $file 
+

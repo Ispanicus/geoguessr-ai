@@ -1,9 +1,9 @@
 # ! pip install ftfy regex tqdm;
 # ! pip install git+https://github.com/openai/CLIP.git;
+import os; print(os.environ['CONDA_DEFAULT_ENV'])
 import numpy as np
 import torch
 import clip
-import os
 import sys
 import csv
 from PIL import Image
