@@ -4,9 +4,9 @@ import csv
 # from sklearn.metrics import ConfusionMatrixDisplay as CMD
 # import matplotlib.pyplot as plt
 # from collections import Counter as Cnt
-# import geopandas as gpd
+import geopandas as gpd
 # import pickle
-# import pandas as pd
+import pandas as pd
 # import json
 # import random
 from PIL import Image
