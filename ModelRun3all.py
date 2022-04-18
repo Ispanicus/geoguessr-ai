@@ -32,13 +32,13 @@ print("First arg, (image source) = ", sys.argv[1])
 print("Second arg, (file-label list) = ", sys.argv[2])
 
 prompt_dict = {
-    "UScity100".csv : "American city" ,
-    "US_states_max100".csv: "state",
-    "France_states_max100".csv: "French state" ,
-    "city100".csv: "city" ,
-    "city300".csv: "city" ,
-    "country100".csv: "country" ,
-    "country100".csv: "country" ,
+    "UScity100" : "American city" ,
+    "US_states_max100": "state",
+    "France_states_max100": "French state" ,
+    "city100": "city" ,
+    "city300": "city" ,
+    "country100": "country" ,
+    "country100": "country" ,
 
 }
 
