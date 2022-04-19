@@ -49,7 +49,7 @@ def LAION_label_count(inputcsv,verbose=False):
             reader = csv.reader(capfile)
             for idx in trange(length):
                 caption = next(reader)
-                caption = caption.lower()
+                caption = caption[0].lower()
                 for label in label_set:
                     if label in caption:
                         label_count[label] += 1
@@ -59,7 +59,7 @@ def LAION_label_count(inputcsv,verbose=False):
             reader = csv.reader(capfile)
             for idx in range(length):
                 caption = next(reader)
-                caption = caption.lower()
+                caption = caption[0].lower()
                 for label in label_set:
                     if label in caption:
                         label_count[label] += 1
