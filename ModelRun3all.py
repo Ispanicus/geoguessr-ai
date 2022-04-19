@@ -1,9 +1,9 @@
 # ! pip install ftfy regex tqdm;
 # ! pip install git+https://github.com/openai/CLIP.git;
+import os; print(os.environ['CONDA_DEFAULT_ENV'])
 import numpy as np
 import torch
 import clip
-import os
 import sys
 import csv
 from PIL import Image
@@ -32,13 +32,13 @@ print("First arg, (image source) = ", sys.argv[1])
 print("Second arg, (file-label list) = ", sys.argv[2])
 
 prompt_dict = {
-    "UScity100".csv : "American city" ,
-    "US_states_max100".csv: "state",
-    "France_states_max100".csv: "French state" ,
-    "city100".csv: "city" ,
-    "city300".csv: "city" ,
-    "country100".csv: "country" ,
-    "country100".csv: "country" ,
+    "UScity100" : "American city" ,
+    "US_states_max100": "state",
+    "France_states_max100": "French state" ,
+    "city100": "city" ,
+    "city300": "city" ,
+    "country100": "country" ,
+    "country100": "country" ,
 
 }
 
