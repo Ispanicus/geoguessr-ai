@@ -15,7 +15,7 @@ from tqdm import trange
 def convert_inputcsv(inputcsv_file):
     """converts inputcsv to geoestimation.csv format
     input is filename of inputcsv i.e country100.csv
-    creates new file in geoinputdata folder""""
+    creates new file in geoinputdata folder"""
     with open("../../mapillary/train.json") as file:
         metadata = json.load(file)
     inputcsv_name = inputcsv_file[:-4]
