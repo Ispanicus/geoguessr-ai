@@ -34,7 +34,7 @@ def convert_inputcsv(inputcsv_file):
                 
 def LAION_label_count(inputcsv,verbose=False):
     inputcsv_src = "../inputdata/"+inputcsv
-    caption_file = r"F:\cah400M.txt"
+    caption_file = r"/home/data_shares/mapillary/cah400M.txt"
     length = 407314954 # length of cah400M.txt file
     
     label_set = set()
