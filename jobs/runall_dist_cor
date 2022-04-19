@@ -1,7 +1,21 @@
 #!/bin/bash
-sbatch city100.job
-sbatch city300.job
-sbatch country100.job
-sbatch US_states_max100.job
-sbatch UScity100.job
-sbatch France_states_max100.job
+sbatch dist1.job
+sbatch dist2.job
+sbatch dist3.job
+sbatch dist4.job
+sbatch dist5.job
+sbatch dist6.job
+sbatch dist7.job
+sbatch dist8.job
+sbatch dist9.job
+sbatch dist10.job
+sbatch dist11.job
+sbatch dist12.job
+sbatch dist13.job
+sbatch dist14.job
+sbatch dist15.job
+sbatch dist16.job
+sbatch dist17.job
+sbatch dist18.job
+sbatch dist19.job
+sbatch dist20.job

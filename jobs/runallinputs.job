@@ -5,7 +5,7 @@
 #SBATCH --output=../outfiles/%x.%j.out      # Name of output file (%j expands to jobId)
 #SBATCH --error=../outfiles/%x.%j.err     # Error handling
 #SBATCH --exclusive
-#BATCH --gres=gpu		 # Schedule gpu
+#SBATCH --gres=gpu		 # Schedule gpu
 #SBATCH --time=24:00:00          # Run time (hh:mm:ss) - run for one hour max
 #SBATCH --partition=red   # Run on either the Red or Brown queue
 
