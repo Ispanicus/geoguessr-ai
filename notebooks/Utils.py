@@ -10,6 +10,7 @@ import pandas as pd
 # import json
 # import random
 from PIL import Image
+from tqdm import trange
 
 def convert_inputcsv(inputcsv_file):
     """converts inputcsv to geoestimation.csv format
@@ -30,6 +31,41 @@ def convert_inputcsv(inputcsv_file):
             for row in reader:
                 file = row[0]
                 writer.writerow([f"{file}.jpg",metadata[file]["lat"],metadata[file]["lon"]])
+                
+def LAION_label_count(inputcsv,verbose=False):
+    inputcsv_src = "../inputdata/"+inputcsv
+    caption_file = r"F:\cah400M.txt"
+    length = 407314954 # length of cah400M.txt file
+    
+    label_set = set()
+    with open(inputcsv_src, encoding="utf-8",newline="") as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        for row in reader:
+            label_set.add(row[1].lower()) 
+            
+    label_count = {label:0 for label in label_set} 
+    if verbose:
+        with open(caption_file,encoding="utf-8") as capfile:
+            reader = csv.reader(capfile)
+            for idx in trange(length):
+                caption = next(reader)
+                caption = caption.lower()
+                for label in label_set:
+                    if label in caption:
+                        label_count[label] += 1
+        
+    else:
+        with open(caption_file,encoding="utf-8") as capfile:
+            reader = csv.reader(capfile)
+            for idx in range(length):
+                caption = next(reader)
+                caption = caption.lower()
+                for label in label_set:
+                    if label in caption:
+                        label_count[label] += 1
+        
+    
+    return label_count
 
 def read_resultcsv(result_file):
     """Input: result_file name of csv file
