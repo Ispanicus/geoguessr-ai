@@ -114,7 +114,7 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
     images[:], texts[:], filenames[:] = zip(*combined)
     image_input = torch.tensor(np.stack(images)).cuda()
 
-    text_descriptions = [f"{start_text}{cc}{end_text}" for cc in region_to_country[texts[0]] #get list of countries to guess from since batch=1 texts should have 1 region in it
+    text_descriptions = [f"{start_text}{cc}{end_text}" for cc in region_to_country[texts[0]]] #get list of countries to guess from since batch=1 texts should have 1 region in it
     text_tokens = clip.tokenize(text_descriptions).cuda()
     
     with torch.no_grad():
