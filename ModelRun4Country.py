@@ -12,7 +12,7 @@ from collections  import OrderedDict
 # import pickle
 import random
 from pathlib import Path
-from Utils import get_data,convert_from_desc
+from notebooks.Utils import get_data,convert_from_desc
 # from tqdm import tqdm
 # from sklearn.metrics import f1_score
 # from sklearn.metrics import precision_recall_fscore_support as prfs
