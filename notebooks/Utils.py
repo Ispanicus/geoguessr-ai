@@ -41,25 +41,21 @@ def LAION_label_count(inputcsv,verbose=False):
     with open(inputcsv_src, encoding="utf-8",newline="") as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
-            label_set.add(row[1].lower()) 
+            label_set.add(" " + row[1].lower()) 
             
     label_count = {label:0 for label in label_set} 
     if verbose:
         with open(caption_file,encoding="utf-8") as capfile:
-            reader = csv.reader(capfile)
             for idx in trange(length):
-                caption = next(reader)
-                caption = caption[0].lower()
+                caption = " " + capfile.readline().lower()
                 for label in label_set:
                     if label in caption:
                         label_count[label] += 1
         
     else:
         with open(caption_file,encoding="utf-8") as capfile:
-            reader = csv.reader(capfile)
             for idx in range(length):
-                caption = next(reader)
-                caption = caption[0].lower()
+                caption = " " + capfile.readline().lower()
                 for label in label_set:
                     if label in caption:
                         label_count[label] += 1

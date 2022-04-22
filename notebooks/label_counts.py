@@ -1,11 +1,11 @@
 from Utils import LAION_label_count
 import os
-import pickle
+import json
 
 for file in os.listdir("../inputdata/"):
     if file[-4:] != ".csv":
         continue
     print(f"Processing {file}")
     label_count = LAION_label_count(file)
-    with open(f"../label_counts/{file[:-4]}_labelcount.pickle", 'wb') as handle:
-        pickle.dump(label_count, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(f"../label_counts/{file[:-4]}_labelcount.json", 'w', encoding="utf-8") as handle:
+        json.dump(label_count, handle, ensure_ascii=False, indent=4)
