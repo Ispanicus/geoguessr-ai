@@ -11,6 +11,7 @@ import pandas as pd
 # import random
 from PIL import Image
 from tqdm import trange
+import clip
 
 def convert_inputcsv(inputcsv_file):
     """converts inputcsv to geoestimation.csv format
@@ -194,7 +195,9 @@ def get_data(batch_size = 1000, image_src = None , inputcsv_src  = None , verbos
     list of images that have been opened and converted to RGB
     list of texts which are labels for each image
     list of filenames without .jpg extension"""
-        
+    model_name = 'ViT-L/14'
+    model, preprocess = clip.load(model_name)
+    model.cuda().eval()
     files = []
     file_label_dict = {}
     with open(inputcsv_src, encoding="utf-8",newline="") as csvfile:
