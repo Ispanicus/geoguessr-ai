@@ -12,12 +12,13 @@ from collections  import OrderedDict
 # import pickle
 import random
 from pathlib import Path
-from notebooks.Utils import get_data,convert_from_desc
+from notebooks.Utils import convert_from_desc,read_resultcsv
 # from tqdm import tqdm
 # from sklearn.metrics import f1_score
 # from sklearn.metrics import precision_recall_fscore_support as prfs
 
-model_name = 'ViT-L/14'
+# model_name = 'ViT-L/14'
+model_name = 'RN50'
 model, preprocess = clip.load(model_name)
 model.cuda().eval()
 input_resolution = model.visual.input_resolution
@@ -48,49 +49,48 @@ print("Second arg, (file-label list) = ", sys.argv[2])
 
 img_src = sys.argv[1]
 files_src = sys.argv[2]
-prompt = "region" #prompt_dict[Path(files_src).stem]
+prompt = "country" #prompt_dict[Path(files_src).stem]
 start_text = "This is a photo of "
 end_text = f", a {prompt}"
-# files = []
-# file_label_dict = {}
-# with open(files_src, encoding="utf-8",newline="") as csvfile:
-#     reader = csv.reader(csvfile, delimiter=',')
-#     for row in reader:
-#         files.append(row[0])
-#         file_label_dict[row[0]] = row[1]
 
+gold, predicts, probs, filenames =  read_resultcsv("country100_region_results.csv")
+files = []
+file_label_dict = {}
+for file,predict in zip(filenames,predicts):
+    files.append(file)
+    file_label_dict[file] = predict[0]
 
-# def get_data(batch_size = 1000, image_src = img_src, text_data = {},verbose=False,final_batch=True):
-#     """Requires:
-#     image_src which is path to directory with all images
-#     text_data which is dictionary with filename:label key-value pairs
+def get_data(batch_size = 1000, image_src = img_src, text_data = {},verbose=False,final_batch=True):
+    """Requires:
+    image_src which is path to directory with all images
+    text_data which is dictionary with filename:label key-value pairs
 
-#     yields:
-#     list of images that have been opened and converted to RGB
-#     list of texts which are labels for each image
-#     list of filenames without .jpg extension"""
-#     max_batch_num = len(files)//batch_size
-#     remainder = len(files)%batch_size
-#     for batch_num in range(max_batch_num+1):
+    yields:
+    list of images that have been opened and converted to RGB
+    list of texts which are labels for each image
+    list of filenames without .jpg extension"""
+    max_batch_num = len(files)//batch_size
+    remainder = len(files)%batch_size
+    for batch_num in range(max_batch_num+1):
         
-#         images = []
-#         texts = []
+        images = []
+        texts = []
         
-#         if batch_num == max_batch_num and remainder == 0:
-#             continue
-#         elif batch_num == max_batch_num and final_batch == True:
-#             filenames = [filename for filename in files[max_batch_num*batch_size::]]
-#         elif batch_num == max_batch_num and final_batch != True:
-#             continue
-#         else:
-#             filenames = [filename for filename in files[batch_num*batch_size:(batch_num+1)*batch_size] ]
+        if batch_num == max_batch_num and remainder == 0:
+            continue
+        elif batch_num == max_batch_num and final_batch == True:
+            filenames = [filename for filename in files[max_batch_num*batch_size::]]
+        elif batch_num == max_batch_num and final_batch != True:
+            continue
+        else:
+            filenames = [filename for filename in files[batch_num*batch_size:(batch_num+1)*batch_size] ]
         
-#         for filename in filenames:            
-#             image = Image.open(f"{image_src}/{filename}.jpg").convert("RGB")
-#             images.append(preprocess(image))
-#             texts.append(text_data[filename])
+        for filename in filenames:            
+            image = Image.open(f"{image_src}/{filename}.jpg").convert("RGB")
+            images.append(preprocess(image))
+            texts.append(text_data[filename])
                 
-#         yield images, texts, filenames
+        yield images, texts, filenames
     
 with open("../pickles/country_to_region.json", encoding="utf-8") as file:
     region_to_country = json.load(file)
@@ -102,17 +102,14 @@ all_labels = []
 all_texts = []
 all_probs = []
 all_filenames = []
-for images, texts, filenames in get_data(batch_size = batch_size, image_src = img_src, inputcsv_src = files_src):
+for images, texts, filenames in get_data(batch_size = batch_size, image_src = img_src, text_data = file_label_dict):
     savefilename = f"../progress/{os.path.basename(files_src[:-4])}_progress.out"
     with open(savefilename, "w") as progressfile:
         progressfile.write(f"Progress: {100*batch*batch_size/length_of_input}%")
     batch += 1
-    combined = list(zip(images, texts, filenames))
-    #random.shuffle(combined)
-    images[:], texts[:], filenames[:] = zip(*combined)
     image_input = torch.tensor(np.stack(images)).cuda()
 
-    text_descriptions = [f"{start_text}{cc}{end_text}" for cc in region_to_country.keys()] #get list of countries to guess from since batch=1 texts should have 1 region in it
+    text_descriptions = [f"{start_text}{cc}{end_text}" for cc in region_to_country[texts[0]]] #get list of countries to guess from since batch=1 texts should have 1 region in it
     text_tokens = clip.tokenize(text_descriptions).cuda()
     
     with torch.no_grad():
@@ -121,7 +118,7 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
         text_features /= text_features.norm(dim=-1, keepdim=True)
         
     text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
-    topk = 5 # changed to 1 since not all regions have more than 1 guess
+    topk = 1 # changed to 1 since not all regions have more than 1 guess
     top_probs, top_labels = text_probs.cpu().topk(topk, dim=-1)
     all_labels.extend([[label.item() for label in image] for image in top_labels])
     all_probs.extend([[prob.item() for prob in image] for image in top_probs])
