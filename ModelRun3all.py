@@ -1,5 +1,3 @@
-# ! pip install ftfy regex tqdm;
-# ! pip install git+https://github.com/openai/CLIP.git;
 import os; print(os.environ['CONDA_DEFAULT_ENV'])
 import numpy as np
 import torch
@@ -11,6 +9,8 @@ from collections  import OrderedDict
 # import pickle
 import random
 from pathlib import Path
+from Utils import get_data, convert_from_desc
+
 # from tqdm import tqdm
 # from sklearn.metrics import f1_score
 # from sklearn.metrics import precision_recall_fscore_support as prfs
@@ -91,11 +91,6 @@ def get_data(batch_size = 1000, image_src = img_src, text_data = {},verbose=Fals
         yield images, texts, filenames
     
     
-def convert_from_desc(text,start_text,end_text):
-    text = text.replace(start_text, "")
-    text = text.replace(end_text, "")
-    return text
-
 
 batch = 0
 batch_size = 1000

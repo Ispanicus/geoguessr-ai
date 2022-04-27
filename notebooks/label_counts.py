@@ -2,6 +2,9 @@ from Utils import LAION_label_count
 import os
 import json
 import sys
+from pathlib import Path
+
+Path("../inputdata/city100.csv").stem
 
 if len(sys.argv) > 1:
     target_file = sys.argv[1]
