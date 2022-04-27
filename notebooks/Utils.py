@@ -82,7 +82,7 @@ def read_resultcsv(result_file):
             gold = row[0]
             preds = row[1][2:-2].split(", ")
             preds = [x.strip("'") for x in preds]
-            probs = row[2][2:-2].split(", ")
+            probs = row[2][1:-1].split(", ")
             probs = [float(x) for x in probs]
             filename = row[3]
             labelspair.append([gold,preds,probs,filename])
