@@ -17,8 +17,8 @@ from notebooks.Utils import convert_from_desc,read_resultcsv
 # from sklearn.metrics import f1_score
 # from sklearn.metrics import precision_recall_fscore_support as prfs
 
-# model_name = 'ViT-L/14'
-model_name = 'RN50'
+model_name = 'ViT-L/14'
+#model_name = 'RN50'
 model, preprocess = clip.load(model_name)
 model.cuda().eval()
 input_resolution = model.visual.input_resolution
@@ -97,11 +97,12 @@ with open("../pickles/country_to_region.json", encoding="utf-8") as file:
 with open(files_src) as f:
     length_of_input = sum(1 for line in f)
 batch = 0
-batch_size = 1000
+batch_size = 1
 all_labels = []
 all_texts = []
 all_probs = []
 all_filenames = []
+all_text_descriptions = []
 for images, texts, filenames in get_data(batch_size = batch_size, image_src = img_src, text_data = file_label_dict):
     savefilename = f"../progress/{os.path.basename(files_src[:-4])}_progress.out"
     with open(savefilename, "w") as progressfile:
@@ -116,7 +117,7 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
         image_features = model.encode_image(image_input).float()
         text_features = model.encode_text(text_tokens).float()
         text_features /= text_features.norm(dim=-1, keepdim=True)
-        
+    all_text_descriptions.append(text_descriptions) 
     text_probs = (100.0 * image_features @ text_features.T).softmax(dim=-1)
     topk = 1 # changed to 1 since not all regions have more than 1 guess
     top_probs, top_labels = text_probs.cpu().topk(topk, dim=-1)
@@ -125,9 +126,10 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
     all_texts.extend(texts)
     all_filenames.extend(filenames)
     
-
-top_label_text = [[convert_from_desc(text_descriptions[labels[x]],start_text,end_text) for x in range(len(labels))] for labels in all_labels]
-
+top_label_text = []
+for text_descriptions, labels in zip(all_text_descriptions,all_labels):
+    top_label_text.append([convert_from_desc(text_descriptions[labels[0]],start_text,end_text)]) 
+#top_label_text = all_labels
 savefilename = f"../resultcsv/{os.path.basename(files_src[:-4])}_region_results.csv"
 print("savefilename: ", savefilename)
 with open(savefilename,'w', encoding="utf-8", newline='') as csvfile:
