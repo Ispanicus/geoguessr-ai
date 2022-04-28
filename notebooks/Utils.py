@@ -239,7 +239,7 @@ def convert_from_desc(text,start_text,end_text):
 def country_from_coords(filenamelist, latlist, lonlist):
     """Takes in 3 lists: filenamelist, latlist, longlist 
     returns a dictionary with filename:country"""
-    countrydf = gpd.read_file("../SHP/Countries/world-administrative-boundaries.shp", encoding="utf-8")
+    countrydf = gpd.read_file("../SHP/CountrySHP/world-administrative-boundaries.shp", encoding="utf-8")
     coords = pd.DataFrame({'Filename':filenamelist, 'Latitude': latlist, 'Longitude': lonlist})
     coordsdf = gpd.GeoDataFrame(coords, crs=4326, geometry=gpd.points_from_xy(coords.Longitude, coords.Latitude))
     countrycoorddf = gpd.sjoin(coordsdf, countrydf)
