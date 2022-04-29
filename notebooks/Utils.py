@@ -246,5 +246,8 @@ def country_from_coords(filenamelist, latlist, lonlist):
     countrydict = dict()
     converter = json.load(open('../country_converter.json'))
     for row in countrycoorddf.iterrows():
-        countrydict[row[1][0]] = converter[row[1][10]]
+        if row[1][10] in converter:
+            countrydict[row[1][0]] = converter[row[1][10]]
+        else:
+            countrydict[row[1][0]] = row[1][10]
     return countrydict
