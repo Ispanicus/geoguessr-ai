@@ -7,7 +7,7 @@ import csv
 import geopandas as gpd
 # import pickle
 import pandas as pd
-# import json
+import json
 # import random
 from PIL import Image
 from tqdm import trange
@@ -244,6 +244,7 @@ def country_from_coords(filenamelist, latlist, lonlist):
     coordsdf = gpd.GeoDataFrame(coords, crs=4326, geometry=gpd.points_from_xy(coords.Longitude, coords.Latitude))
     countrycoorddf = gpd.sjoin(coordsdf, countrydf)
     countrydict = dict()
+    converter = json.load(open('../country_converter.json'))
     for row in countrycoorddf.iterrows():
-        countrydict[row[1][0]] = row[1][10]
+        countrydict[row[1][0]] = converter[row[1][10]]
     return countrydict
