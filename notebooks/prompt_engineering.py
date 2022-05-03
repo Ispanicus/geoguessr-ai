@@ -37,7 +37,7 @@ def get_prompts():
     prompt_dict = {}
     for lst in prompt_list_temp:
         for pair in lst.items():
-            prompt_dict[f"This is a photo of {pair[0]}, {pair[1]}."] = pair[0]
+            prompt_dict[f"This is a photo of {pair[0]}, {pair[1]}."] = pair[0].split(',')[0]
     return prompt_dict
 
 
