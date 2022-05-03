@@ -91,6 +91,8 @@ all_labels = []
 all_texts = []
 all_probs = []
 all_filenames = []
+prompt_dict = get_prompts()
+text_descriptions = list(prompt_dict.values)
 for images, texts, filenames in get_data(batch_size = batch_size, image_src = img_src, text_data = file_label_dict):
     savefilename = f"../progress/{os.path.basename(files_src[:-4])}_progress.out"
     with open(savefilename, "w") as progressfile:
@@ -100,7 +102,7 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
     image_input = torch.tensor(np.stack(images)).cuda()
 
     # text_descriptions = [f"{start_text}{cc}{end_text}" for cc in set(file_label_dict.values())]
-    text_descriptions = get_prompts()
+    
     text_tokens = clip.tokenize(text_descriptions).cuda()
     
     with torch.no_grad():
@@ -117,7 +119,7 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
     all_filenames.extend(filenames)
     
 
-top_label_text = [[convert_from_desc(text_descriptions[labels[x]],start_text,end_text) for x in range(len(labels))] for labels in all_labels]
+top_label_text = [[prompt_dict[text_descriptions[labels[x]]] for x in range(len(labels))] for labels in all_labels]
 
 savefilename = f"../resultcsv/{os.path.basename(files_src[:-4])}_mixedprompt_results.csv"
 print("savefilename: ", savefilename)
