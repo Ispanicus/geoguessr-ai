@@ -34,11 +34,11 @@ def get_prompts():
     latin_america = {country: "a country in latin america" for country in region_to_country["latin america"]}
 
     prompt_list_temp= [caribbean,greenland,baltic,balkan,western_europe,southern_europe,eastern_europe,northern_europe,middle_east,north_africa,west_africa,east_africa,central_africa,southern_africa,sub_saharan_africa,central_asia,east_asia,south_asia,far_east_asia,south_east_asia,western_asia,oceania,polynesia,micronesia,north_america,south_america,central_america,latin_america]
-    prompt_list=[]
+    prompt_dict = {}
     for lst in prompt_list_temp:
         for pair in lst.items():
-            prompt_list.append(f"This is a photo of {pair[0]}, {pair[1]}.")
-    return prompt_list
+            prompt_dict[f"This is a photo of {pair[0]}, {pair[1]}."] = pair[0]
+    return prompt_dict
 
 
 
