@@ -5,16 +5,9 @@ import clip
 import sys
 import csv
 from PIL import Image
-from collections  import OrderedDict
-# import pickle
-import random
 from pathlib import Path
-from Utils import get_data, convert_from_desc
+from notebooks.Utils import convert_from_desc
 from notebooks.prompt_engineering import get_prompts
-
-# from tqdm import tqdm
-# from sklearn.metrics import f1_score
-# from sklearn.metrics import precision_recall_fscore_support as prfs
 
 model_name = 'ViT-L/14'
 model, preprocess = clip.load(model_name)
@@ -103,9 +96,7 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
     with open(savefilename, "w") as progressfile:
         progressfile.write(f"Progress: {100*batch/batch_size}%")
     batch += 1
-    combined = list(zip(images, texts, filenames))
-    #random.shuffle(combined)
-    images[:], texts[:], filenames[:] = zip(*combined)
+
     image_input = torch.tensor(np.stack(images)).cuda()
 
     # text_descriptions = [f"{start_text}{cc}{end_text}" for cc in set(file_label_dict.values())]
