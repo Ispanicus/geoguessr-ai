@@ -5,11 +5,8 @@ import clip
 import sys
 import csv
 from PIL import Image
-from collections  import OrderedDict
-# import pickle
-import random
 from pathlib import Path
-from Utils import get_data, convert_from_desc
+from notebooks.Utils import convert_from_desc
 
 # from tqdm import tqdm
 # from sklearn.metrics import f1_score
@@ -25,23 +22,19 @@ vocab_size = model.vocab_size
 print("Model name: ",model_name)
 print("Input resolution:", input_resolution)
 print("Context length:", context_length)
-print("Vocab size:", vocab_size);
+print("Vocab size:", vocab_size)
 print("____________________________")
 
 print("First arg, (image source) = ", sys.argv[1])
 print("Second arg, (file-label list) = ", sys.argv[2])
 
 prompt_dict = {
-    "UScity100" : "American city" ,
     "US_states_max100": "state",
     "France_states_max100": "French state" ,
-    "city100": "city" ,
     "city300": "city" ,
     "country100": "country" ,
-    "country100": "country" ,
-
+    "filtered_country100": "country" ,
 }
-
 
 
 img_src = sys.argv[1]
@@ -103,11 +96,8 @@ for images, texts, filenames in get_data(batch_size = batch_size, image_src = im
     with open(savefilename, "w") as progressfile:
         progressfile.write(f"Progress: {100*batch/batch_size}%")
     batch += 1
-    combined = list(zip(images, texts, filenames))
-    #random.shuffle(combined)
-    images[:], texts[:], filenames[:] = zip(*combined)
-    image_input = torch.tensor(np.stack(images)).cuda()
 
+    image_input = torch.tensor(np.stack(images)).cuda()
     text_descriptions = [f"{start_text}{cc}{end_text}" for cc in set(file_label_dict.values())]
     text_tokens = clip.tokenize(text_descriptions).cuda()
     
@@ -131,7 +121,7 @@ savefilename = f"../resultcsv/{os.path.basename(files_src[:-4])}_results.csv"
 print("savefilename: ", savefilename)
 with open(savefilename,'w', encoding="utf-8", newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter='\t')
-    writer.writerow(["Gold","Predictions", "Probabilities"])
+    writer.writerow(["Gold","Predictions", "Probabilities","Filename"])
     output = [[x,y,z,z2] for x,y,z,z2 in zip(all_texts,top_label_text,all_probs,all_filenames)]
     for row in output:
         writer.writerow(row)
