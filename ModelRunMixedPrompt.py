@@ -92,7 +92,7 @@ all_texts = []
 all_probs = []
 all_filenames = []
 prompt_dict = get_prompts()
-text_descriptions = list(prompt_dict.values())
+text_descriptions = list(prompt_dict.keys())
 for images, texts, filenames in get_data(batch_size = batch_size, image_src = img_src, text_data = file_label_dict):
     savefilename = f"../progress/{os.path.basename(files_src[:-4])}_progress.out"
     with open(savefilename, "w") as progressfile:
