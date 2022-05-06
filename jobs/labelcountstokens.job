@@ -1,12 +1,15 @@
 #!/bin/bash
 
-#SBATCH --job-name=labelcounts        # Job name
+#SBATCH --job-name=labelcountstokens        # Job name
 #SBATCH --output=job.%j.out      # Name of output file (%j expands to jobId)
 #SBATCH --error=R-%x.%j.err     # Error handling
 #SBATCH --nodes=1                # Total number of nodes requested
-#SBATCH --cpus-per-task=1        # Schedule one core
-#SBATCH --time=24:00:00          # Run time (hh:mm:ss) - run for one hour max
-#SBATCH --partition=brown    # Run on either the Red or Brown queue
+#SBATCH --cpus-per-task=32        # Schedule one core
+#SBATCH --time=6:00:00          # Run time (hh:mm:ss) - run for one hour max
+#SBATCH --partition=red    # Run on either the Red or Brown queue
+#SBATCH --mail-type=FAIL,END    # Run on either the Red or Brown queue
+
+
 
 # Print out the hostname of the node the job is running on
 python3 ../notebooks/label_counts_tokens.py "../inputdata/city300.csv"
