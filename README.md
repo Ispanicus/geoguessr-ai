@@ -1,5 +1,41 @@
 # geoguessr-ai
 
+
+CountryData.py
+    Script used to get Geopy Metadata for Mapillary
+
+
+
+
+## SHP
+    Shapefile data folder
+
+
+## figures
+    Some of the figures used in paper are stored here.
+
+## geoinputdata & georesultcsv
+    country100_geoestimation.csv
+        Dataset to run country100 with GeoEstimation model
+
+    country100_geoestimation_result.csv
+        output from GeoEstimation model for above input
+
+## inputdata
+    All input csvs to CLIP were stored here
+
+## jobs
+    All HPC job scripts
+
+## label_counts
+    label_count results from label_count scripts
+
+## outfiles
+    outfiles from HPC jobs
+    
+
+## notebooks folder
+
 Choropleth.ipynb
     Used to create choropleth in paper
 
@@ -30,6 +66,8 @@ explorecsv_results.ipynb
     used to explore results using confusion matrices etc.
 explorecsv_results_climates.ipynb
     used to explore climate results
+explorecsv_region_country_exp.ipynb
+    used to get region results and country from region results.
 
 label_counts.py
     original script to get counts of labels in LAION. Used simple string matching on prefixes. i.e "Cali" would match with "California".
