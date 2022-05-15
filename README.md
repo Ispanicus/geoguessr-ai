@@ -61,6 +61,10 @@ Choropleth.ipynb
     
     Used to create choropleth in paper
 
+Climate.ipynb
+    
+    Used to join shapefiles and get specific climates for each coordinate
+
 cosine_sim_correction
     
     Data filtering using cosine similarity script
