@@ -2,7 +2,20 @@
 
 
 CountryData.py
+    
     Script used to get Geopy Metadata for Mapillary
+
+ModelRun3all.py
+
+    Script used to get results from standard experiments
+
+ModelRun4Country.py ModelRun4Region.py
+    
+    Used to guess Region and then guess country from Region
+
+ModelRunMixedPrompt.py
+
+    Script used to run MixedPrompt experiment
 
 
 
@@ -33,6 +46,14 @@ label_count results from label_count scripts
 ## outfiles
 
 outfiles from HPC jobs 
+
+## Pickles
+
+    various datafiles used in notebooks and scripts
+
+## resultscsv
+
+    results from experiments
 
 ## notebooks
 
@@ -94,9 +115,12 @@ label_counts_tokens_climate_simp.py
 
 
 mapillary.ipynb
+    
     used to do some initial processing of Mapillary dataset. Moved files into single folder. Visualized location of mapillary on world map. Used naive approach for guessing country which was scrapped.
 overpass.ipynb
+    
     attempt to use overpass API directly to get metadata for Mapillary. Was unsuccessful.
 
 prompt_engineering.py
+    
     used to create all prompts for mixedprompt experiment
