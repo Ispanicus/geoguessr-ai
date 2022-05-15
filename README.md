@@ -9,30 +9,30 @@ CountryData.py
 
 ## SHP
 
-    Shapefile data folder
+Shapefile data folder
 ## figures
 
-    Some of the figures used in paper are stored here.
+Some of the figures used in paper are stored here.
 
 ## geoinputdata & georesultcsv
 
-    country100_geoestimation.csv
-        Dataset to run country100 with GeoEstimation model
+country100_geoestimation.csv
+    Dataset to run country100 with GeoEstimation model
 
-    country100_geoestimation_result.csv
-        output from GeoEstimation model for above input
+country100_geoestimation_result.csv
+    output from GeoEstimation model for above input
 ## inputdata
 
-    All input csvs to CLIP were stored here
+All input csvs to CLIP were stored here
 ## jobs
 
-    All HPC job scripts
+All HPC job scripts
 ## label_counts
 
-    label_count results from label_count scripts
+label_count results from label_count scripts
 ## outfiles
 
-    outfiles from HPC jobs 
+outfiles from HPC jobs 
 
 ## notebooks folder
 
