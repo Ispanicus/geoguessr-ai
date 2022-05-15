@@ -49,11 +49,11 @@ outfiles from HPC jobs
 
 ## Pickles
 
-    various datafiles used in notebooks and scripts
+various datafiles used in notebooks and scripts
 
 ## resultscsv
 
-    results from experiments
+results from experiments
 
 ## notebooks
 
