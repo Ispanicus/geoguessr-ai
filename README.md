@@ -1,5 +1,5 @@
 # geoguessr-ai
-
+This is the repository for the project [Exploring CLIP’s Geo-location capabilities](CLIP_Geolocation.pdf)
 
 CountryData.py
     
