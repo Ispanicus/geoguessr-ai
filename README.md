@@ -1,130 +1,149 @@
 # geoguessr-ai
-This is the repository for the project [Exploring CLIP’s Geo-location capabilities](CLIP_Geolocation.pdf)
 
-CountryData.py
-    
-    Script used to get Geopy Metadata for Mapillary
+A repository supporting the paper [Exploring CLIP’s Geo-location capabilities](CLIP_Geolocation.pdf), which examines the potential of the CLIP model to infer geographic context from images.
 
-ModelRun3all.py
+## Table of Contents
 
-    Script used to get results from standard experiments
+- [Project Overview](#project-overview)
+- [Paper](#paper)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Data](#data)
+- [Directory Structure](#directory-structure)
+- [Usage](#usage)
+  - [CLI Scripts](#cli-scripts)
+  - [Jupyter Notebooks](#jupyter-notebooks)
+  - [HPC Jobs](#hpc-jobs)
+- [Results and Figures](#results-and-figures)
+- [Acknowledgements](#acknowledgements)
 
-ModelRun4Country.py ModelRun4Region.py
-    
-    Used to guess Region and then guess country from Region
+## Project Overview
 
-ModelRunMixedPrompt.py
+This project explores the geo-location capabilities of OpenAI’s CLIP model through a series of experiments predicting geographic metadata such as country, region, and climate labels from images. Inspired by the GeoGuessr game, we evaluate CLIP on Mapillary and climate datasets to understand its ability to encode spatial information.
 
-    Script used to run MixedPrompt experiment
+## Paper
 
+Please refer to the full details in the paper:
 
+- **PDF**: [Exploring CLIP’s Geo-location capabilities](CLIP_Geolocation.pdf)
 
+## Prerequisites
 
-## SHP
+- Python 3.8 or higher
+- pip
+- (Optional) NVIDIA GPU with CUDA support for accelerated CLIP inference
 
-Shapefile data folder
-## figures
+## Installation
 
-Some of the figures used in paper are stored here.
+1. Clone the repository and enter the folder:
 
-## geoinputdata & georesultcsv
+    ```bash
+    git clone https://github.com/<your_org>/geoguessr-ai.git
+    cd geoguessr-ai
+    ```
 
-country100_geoestimation.csv
-    Dataset to run country100 with GeoEstimation model
+2. (Optional but recommended) Create a virtual environment:
 
-country100_geoestimation_result.csv
-    output from GeoEstimation model for above input
-## inputdata
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
-All input csvs to CLIP were stored here
-## jobs
+3. Install the required Python packages:
 
-All HPC job scripts
-## label_counts
+    ```bash
+    pip install torch torchvision
+    pip install git+https://github.com/openai/CLIP.git
+    pip install pandas geopandas shapely tqdm pillow geopy
+    ```
 
-label_count results from label_count scripts
-## outfiles
+## Data
 
-outfiles from HPC jobs 
+Several data sources are used in this project:
 
-## Pickles
+| Directory       | Description                                                  |
+|-----------------|--------------------------------------------------------------|
+| `inputdata/`    | Raw CSV files with image IDs and labels (country, city, etc.)|
+| `geoinputdata/` | Input CSVs for CLIP geo-estimation experiments               |
+| `georesultcsv/` | Output from external geo-estimation models                   |
+| `SHP/`          | Shapefiles for world administrative boundaries               |
+| `pickles/`      | Serialized intermediate data                                 |
+| `label_counts/` | Label frequency counts on LAION captions                     |
 
-various datafiles used in notebooks and scripts
+## Directory Structure
 
-## resultscsv
+```
+.
+├── CLIP_Geolocation.pdf           # Paper PDF
+├── CountryData.py                 # Reverse geocoding with geopy
+├── ModelRun3all.py                # Standard CLIP experiments
+├── ModelRun4Region.py             # Region-level CLIP experiments
+├── ModelRun4Country.py            # Two-stage region→country experiments
+├── ModelRunMixedPrompt.py         # Mixed prompt design experiments
+├── inputdata/                     # Raw CSV datasets
+├── geoinputdata/                  # Geo-estimation model inputs
+├── georesultcsv/                  # Geo-estimation model outputs
+├── SHP/                           # Shapefile data (world boundaries)
+├── pickles/                       # Intermediate data (pickle/json)
+├── label_counts/                  # LAION label frequency outputs
+├── resultcsv/                     # Final experiment results CSVs
+├── figures/                       # Figures for the paper
+├── notebooks/                     # Jupyter notebooks for EDA & plotting
+├── jobs/                          # HPC job submission scripts
+├── outfiles/                      # HPC job logs
+└── README.md                      # Project overview (this file)
+```
 
-results from experiments
+## Usage
 
-## notebooks
+### CLI Scripts
 
-Choropleth.ipynb
-    
-    Used to create choropleth in paper
+- **CountryData.py**: Reverse geocode Mapillary metadata.
+    ```bash
+    python CountryData.py path/to/train.json
+    ```
+- **ModelRun3all.py**: Run baseline experiments (all tasks).
+    ```bash
+    python ModelRun3all.py
+    ```
+- **ModelRun4Region.py**: Region-level classification.
+    ```bash
+    python ModelRun4Region.py
+    ```
+- **ModelRun4Country.py**: Two-stage region→country classification.
+    ```bash
+    python ModelRun4Country.py
+    ```
+- **ModelRunMixedPrompt.py**: Mixed-prompt engineering experiments.
+    ```bash
+    python ModelRunMixedPrompt.py
+    ```
 
-Climate.ipynb
-    
-    Used to join shapefiles and get specific climates for each coordinate
+_Read the docstrings at the top of each script for additional arguments._
 
-cosine_sim_correction
-    
-    Data filtering using cosine similarity script
+### Jupyter Notebooks
 
-country_to_region.ipynb
-country_to_region.json
-    
-    Manually checking what the largest sub-region in a country was. Purpose was to potentially do a larger scale State-level experiment. Was not used.
+Key notebooks for data exploration and visualization:
 
-Distance_correction.ipynb
-distance_correction.py
-    
-    Scripts for mapillary data filtering as well as development notebook
+- `notebooks/mapillary.ipynb`: Processing Mapillary dataset and basic visualizations.
+- `notebooks/GeoEst_Metadata.py`: Multiprocessing reverse geocoding pipeline.
+- `notebooks/prompt_engineering.py`: Building mixed prompts for CLIP.
+- `notebooks/explorecsv_results.ipynb`: Confusion matrix and result analysis.
+- `notebooks/choropleth.ipynb`: Generating choropleth maps.
+- `notebooks/Climate.ipynb`: Climate label assignment and plotting.
 
-GeoEst_Metadata.py
-    
-    Script to quickly get GeoEstimation metadata using multiprocessing. Metadata was for all prediction coordinates provided by running GeoEstimation on entire Mapillary.
-    Was not used as we checked the usage guidelines of the API and the limit of 1 request per second was too limiting to run this script.
+### HPC Jobs
 
-Region_to_country.ipynb
-    
-    Manual creation of which countries exist in which regions dataset.
+Use the scripts in `jobs/` to submit batch jobs on an HPC cluster. A helper script `jobs/runall` is provided to launch standard experiments.
 
-Utils.py
-    
-    contains some utility functions that were used repeatedly across multiple notebooks
+## Results and Figures
 
-explore_15labels.ipynb
-    
-    used to create some of the confusion matrices in the paper
-explorecsv_results.ipynb
-    
-    used to explore results using confusion matrices etc.
-explorecsv_results_climates.ipynb
-    
-    used to explore climate results
-explorecsv_region_country_exp.ipynb
-    
-    used to get region results and country from region results.
+- **Results CSVs**: Output tables are found in `resultcsv/` and `georesultcsv/`.
+- **Paper Figures**: Pre-generated figures are stored in `figures/`.
 
-label_counts.py
-    
-    original script to get counts of labels in LAION. Used simple string matching on prefixes. i.e "Cali" would match with "California".
-label_counts_tokens.py
-    
-    multiprocessing script used to get counts of labels in LAION. Used CLIP's tokenizer to check if a label's tokens were a subset of a caption's tokens.
-label_counts_tokens_climate.py
-label_counts_tokens_climate_simp.py
-    
-    multiprocessing script used to get counts of label in LAION for original climate labels and manually created climate labels.
+## Acknowledgements
 
-
-
-mapillary.ipynb
-    
-    used to do some initial processing of Mapillary dataset. Moved files into single folder. Visualized location of mapillary on world map. Used naive approach for guessing country which was scrapped.
-overpass.ipynb
-    
-    attempt to use overpass API directly to get metadata for Mapillary. Was unsuccessful.
-
-prompt_engineering.py
-    
-    used to create all prompts for mixedprompt experiment
+- This work is built on OpenAI’s CLIP model.
+- Mapillary dataset for images.
+- LAION dataset as a proxy for CLIP's training data.
+- Geopandas and geopy for geospatial processing.
